@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote For You🕊</title>
+<style>
+	*{
+		padding:0;
+		border:0;
+    margin: 0;
+		box-sizing:border-box;
+	}
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+	  width:100dvw;
+	  height:100dvh;
+	  color:white;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  flex-direction:column;
+    overflow: hidden;
+    text-shadow: 0 0 1dvw black;
+    transition: background .3s;
+  }
+  body::before{
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    width: 100dvw;
+    height: 100dvh;
+    background: rgba(29, 44, 114, 0.555);
+  }
+  h1{
+    position: absolute;
+    top: 10%;
+    font-size: 8dvw;
+  }
+  #quote {
+    font-size: 6dvw;
+    width: 80dvw;
+    z-index: 1;
+  }
+  #generate-btn {
+    padding: 10px 20px;
+    font-size: 3.4dvw;
+    color: inherit;
+    cursor: pointer;
+    background-color: rgba(39, 52, 245, 0.637);
+    border: 1px solid white;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 10%;
+    transition: .3s;
+
+  }
+
+  @media only screen and (min-width: 600px) {
+  h1 {
+    top: 1%;
+    font-size: 4dvw;
+  }
+  #quote{
+    font-size: 3dvw;
+  }
+  #generate-btn{
+    font-size: 1.8dvw;
+    bottom: 2%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  #quote{
+    font-size: 2dvw;
+  }
+  #generate-btn:active {
+    scale: .9;
+  }
+}
+</style>
+</head>
+<body>
+  <h1><i>Quotes For You</i></h1>
+  <div id="quote">Click the button to generate a quote:</div>
+  <button id="generate-btn">Regenerate</button>
+
+  <script>
+    // Function to fetch a random quote from Quotable API
+    function fetchRandomQuote() {
+      fetch('https://api.quotable.io/random')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('quote').innerText = `${data.content} - ${data.author}`;
+        })
+        .catch(error => {
+          console.log(error);
+          document.getElementById('quote').innerText = 'Failed to fetch quote. Please try again later.';
+        });
+        changeBackground()
+    }
+
+    // Event listener for the button click
+    document.getElementById('generate-btn').addEventListener('click', fetchRandomQuote);
+
+    // Initial load of a quote
+    fetchRandomQuote();
+
+    //change background image
+    function changeBackground(){
+      let random = Math.round((Math.random()*17)+0.5)
+      document.querySelector('body').style.background = `url("assets/${random}.jpg")`;
+      console.log(document.querySelector('body').style.background);
+      document.querySelector('body').style.backgroundRepeat = 'no-repeat';
+      document.querySelector('body').style.backgroundSize = 'cover';
+    }
+  </script>
+</body>
+</html>
